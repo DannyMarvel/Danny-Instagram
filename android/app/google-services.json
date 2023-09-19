@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1073438904048",
+    "project_id": "danny-instagram",
+    "storage_bucket": "danny-instagram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073438904048:android:7e9ce96bab7cf8a6e2bc35",
+        "android_client_info": {
+          "package_name": "com.example.tentacles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073438904048-7ocbmdn1iuhk2gh7uh87bogh4m466dik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNf_V9oskLeGuhKtAOqbAkGTPvR3XSXAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073438904048-7ocbmdn1iuhk2gh7uh87bogh4m466dik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
