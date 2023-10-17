@@ -7,6 +7,7 @@ import '../models/post.dart';
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String postId = Uuid().v1(); 
+  
 //Now we create a function to upload post
   Future<String> uploadPost(
     String description,
