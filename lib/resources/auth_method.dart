@@ -36,6 +36,7 @@ class AuthMethods {
               password.isNotEmpty ||
               username.isNotEmpty ||
               bio.isNotEmpty ||
+              // ignore: unnecessary_null_comparison
               file != null
 //Then we register the user
           ) {

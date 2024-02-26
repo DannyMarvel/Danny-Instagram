@@ -7,7 +7,7 @@ import 'package:tentacles/resources/firestore_method.dart';
 import 'package:tentacles/screens/comments_screen.dart';
 import 'package:tentacles/utils/colors.dart';
 import 'package:tentacles/utils/utils.dart';
-import '../models/users.dart';
+import '../models/users.dart' as model;
 import './like_animation.dart';
 
 class PostCard extends StatefulWidget {
@@ -45,7 +45,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final model.User user = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mobileBackgroundColor,
       padding: EdgeInsets.symmetric(vertical: 10),
@@ -64,7 +64,9 @@ class _PostCardState extends State<PostCard> {
               children: [
                 CircleAvatar(
                   radius: 16,
-                  backgroundImage: NetworkImage(widget.snap['profileImage']),
+                  backgroundImage: NetworkImage(
+                    widget.snap['profileImage'].toString(),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
@@ -75,7 +77,7 @@ class _PostCardState extends State<PostCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.snap['username'],
+                          widget.snap['username'].toString(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
@@ -86,51 +88,54 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => Dialog(
-                                  child: ListView(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 16,
-                                    ),
-                                    shrinkWrap: true,
-                                    children: [
-                                      //The we map all the children we recieve and map it with an Inkwell so we can click on it
-                                      'Delete',
-                                    ]
-                                        .map(
-                                          (e) => InkWell(
-                                            onTap: () {
-                                              //This is how we click to delete
-                                              FirestoreMethods().deletePost(
-                                                  widget.snap['postId']);
-                                              //Now we also remove the dialog box after deleting
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 12,
-                                                      horizontal: 16),
-                                              child: Container(
-                                                child: Text(e),
-                                              ),
-                                            ),
+                widget.snap['uid'].toString() == user.uid
+                    ? Expanded(
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                        child: ListView(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 16,
                                           ),
-                                        )
-                                        .toList(),
-                                  ),
-                                ));
-                      },
-                      icon: Icon(Icons.more_vert),
-                    ),
-                  ),
-                ),
+                                          shrinkWrap: true,
+                                          children: [
+                                            //The we map all the children we recieve and map it with an Inkwell so we can click on it
+                                            'Delete',
+                                          ]
+                                              .map(
+                                                (e) => InkWell(
+                                                  onTap: () {
+                                                    //This is how we click to delete
+                                                    FirestoreMethods()
+                                                        .deletePost(widget
+                                                            .snap['postId']);
+                                                    //Now we also remove the dialog box after deleting
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 12,
+                                                        horizontal: 16),
+                                                    child: Container(
+                                                      child: Text(e),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                        ),
+                                      ));
+                            },
+                            icon: Icon(Icons.more_vert),
+                          ),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -193,10 +198,10 @@ class _PostCardState extends State<PostCard> {
                   onPressed: () async {
 //We the same for the smaller likes button
                     await FirestoreMethods().likePost(
-                        widget.snap['postId'], 
-                        user.uid, 
-                        widget.snap['likes'],
-                        );
+                      widget.snap['postId'],
+                      user.uid,
+                      widget.snap['likes'],
+                    );
                   },
                   icon: widget.snap['likes'].contains(user.uid)
                       ? Icon(
